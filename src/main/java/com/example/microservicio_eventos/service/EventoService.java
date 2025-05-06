@@ -5,8 +5,6 @@ import com.example.microservicio_eventos.model.Evento;
 import com.example.microservicio_eventos.repository.EventoRepository;
 
 import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +14,12 @@ import java.util.List;
 @Service
 public class EventoService {
 
-    @Autowired
-    private EventoRepository repository;
+    private final EventoRepository repository;
+
+    // ✅ Constructor explícito para usar en tests
+    public EventoService(EventoRepository repository) {
+        this.repository = repository;
+    }
 
     public List<Evento> obtenerTodos() {
         log.debug("Servicio: obtenerTodos()");
@@ -64,3 +66,4 @@ public class EventoService {
         repository.delete(existente);
     }
 }
+
